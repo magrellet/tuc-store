@@ -4,6 +4,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
+import CartWidget from "./CartWidget";
+
 import "./NavBar.css";
 
 class NavBar extends Component {
@@ -17,6 +19,9 @@ class NavBar extends Component {
             {menuItems.map((item, i) => {
               return <Button color="inherit">{item}</Button>;
             })}
+            <Button color="inherit">
+              <CartWidget />
+            </Button>
           </section>
         </Toolbar>
       </AppBar>
