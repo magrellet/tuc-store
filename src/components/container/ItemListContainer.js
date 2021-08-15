@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 
 import ShareIcon from "@material-ui/icons/Share";
+import ItemCount from "./ItemCount";
 
 import "./ItemListContainer.css";
 
@@ -19,7 +20,7 @@ export class ItemListContainer extends Component {
         <h2 className="ItemListTitle">Más Buscados</h2>
         <Card className="Card">
           <CardActionArea className="Card-Media">
-            <CardMedia title="Contemplative Reptile" />
+            <CardMedia title="Lorem" component="src" />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
                 Lorem ipsum
@@ -32,6 +33,7 @@ export class ItemListContainer extends Component {
             </CardContent>
           </CardActionArea>
           <CardActions>
+            <ItemCount />
             <Button size="small" color="primary">
               Agregar a Carrito
             </Button>

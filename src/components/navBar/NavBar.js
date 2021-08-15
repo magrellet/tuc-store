@@ -17,7 +17,11 @@ class NavBar extends Component {
           <Typography variant="h4">Tuc Store e-commerce</Typography>
           <section className="Menu-Button">
             {menuItems.map((item, i) => {
-              return <Button color="inherit">{item}</Button>;
+              return (
+                <Button key={i} color="inherit">
+                  {item}
+                </Button>
+              );
             })}
             <Button color="inherit">
               <CartWidget />
