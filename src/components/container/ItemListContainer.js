@@ -15,6 +15,8 @@ import "./ItemListContainer.css";
 
 export class ItemListContainer extends Component {
   render() {
+    const initialStock = 1;
+    const maxStock = 25;
     return (
       <div>
         <h2 className="ItemListTitle">Más Buscados</h2>
@@ -33,7 +35,7 @@ export class ItemListContainer extends Component {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <ItemCount />
+            <ItemCount initialStock={initialStock} maxStock={maxStock} />
             <Button size="small" color="primary">
               Agregar a Carrito
             </Button>
