@@ -34,7 +34,6 @@ export default function ItemCount(props) {
           label="Cantidad"
           variant="outlined"
           value={itemCount}
-          color="primary"
           onChange={(e) => handleChange(e.target.value)}
           inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
         />
