@@ -1,10 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import ShoppingCart from "@material-ui/icons/ShoppingCartOutlined";
 
-export class CartWidget extends Component {
-  render() {
-    return <ShoppingCart />;
-  }
-}
+const CartWidget = () => {
+  return <ShoppingCart />;
+};
 
 export default CartWidget;

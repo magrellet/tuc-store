@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
-export default function ItemCount(props) {
+const ItemCount = (props) => {
   const { initialStock, maxStock } = props;
   const [itemCount, setItemCount] = useState(initialStock);
   const itemStock = maxStock;
@@ -47,4 +47,6 @@ export default function ItemCount(props) {
       </ButtonGroup>
     </div>
   );
-}
+};
+
+export default ItemCount;

@@ -10,30 +10,37 @@ import ShareIcon from "@material-ui/icons/Share";
 import ItemCount from "./ItemCount";
 import { CardHeader } from "@material-ui/core";
 
-export default function Item(props) {
+
+const Item = (props) => {
   const { item } = props;
   const initialStock = 1;
   const maxStock = 25;
-  const randomImageUrl = `https://source.unsplash.com/random/200x200?sig=${item.id}`;
 
   return (
     <Card className="Card" elevation={3}>
       <CardHeader title={item.title} />
-      <CardMedia component="img" title="Paella dish" src={randomImageUrl} />
+      <CardMedia component="img" title="image" src={item.img} />
       <CardContent>
         <Typography variant="body2" color="textSecondary">
           {item.body}
         </Typography>
       </CardContent>
       <CardActions>
-        <ItemCount initialStock={initialStock} maxStock={maxStock} />
         <Button size="small" color="primary">
-          Agregar a Carrito
+          Ver Detalle
         </Button>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
       </CardActions>
+      <CardActions>
+        <ItemCount initialStock={initialStock} maxStock={maxStock} />
+        <Button size="small" color="primary">
+          Agregar a Carrito
+        </Button>
+      </CardActions>
     </Card>
   );
-}
+};
+
+export default Item;
