@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ItemList from "./items/ItemList";
+import ItemList from "../items/ItemList";
 
 import "./ItemListContainer.css";
 
