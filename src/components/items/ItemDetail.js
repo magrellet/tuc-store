@@ -2,9 +2,12 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
+import ItemCount from "./ItemCount";
+
 import "./ItemDetail.css";
 
 const ItemDetail = ({ item }) => {
+  const initialStock = 1;
   return (
     <Container maxWidth="sm" className="Container">
       <Grid container spacing={3}>
@@ -25,6 +28,7 @@ const ItemDetail = ({ item }) => {
           <Typography variant="h6" color="textSecondary">
             Precio: {item.price}
           </Typography>
+          <ItemCount initialStock={initialStock} maxStock={item.stock} />
         </Typography>
       </Grid>
     </Container>

@@ -1,3 +1,5 @@
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import "./App.css";
 import NavBar from "./components/navBar/NavBar";
 import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
@@ -5,11 +7,16 @@ import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailCont
 
 const App = () => {
   return (
-    <div>
-      <NavBar />
-      <ItemDetailContainer />
-      <ItemListContainer />
-    </div>
+    <Router>
+      <div>
+        <NavBar />
+        <Switch>
+          <Route path="/" exact component={ItemListContainer} />
+          <Route path="/category/:id" component={ItemListContainer} />
+          <Route path="/item/:id" component={ItemDetailContainer} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 

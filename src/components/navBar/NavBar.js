@@ -3,25 +3,30 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 import CartWidget from "./CartWidget";
 
 import "./NavBar.css";
 
 const NavBar = () => {
-  const menuItems = ["Marcas", "Productos", "Sale!"];
+  const categoryBasePath = "/category/";
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h4">Tuc Store e-commerce</Typography>
+        <Typography variant="h4">
+          <Link to="/"> Tuc Store e-commerce</Link>
+        </Typography>
         <section className="Menu-Button">
-          {menuItems.map((item, i) => {
-            return (
-              <Button key={i} color="inherit">
-                {item}
-              </Button>
-            );
-          })}
+          <Link to="/">
+            <Button color="inherit">Productos</Button>
+          </Link>
+          <Link to={`${categoryBasePath}1`}>
+            <Button color="inherit">Marcas</Button>
+          </Link>
+          <Link to={`${categoryBasePath}2`}>
+            <Button color="inherit">Sale!</Button>
+          </Link>
           <Button color="inherit">
             <CartWidget />
           </Button>

@@ -6,18 +6,26 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 
 import Item from "./Item";
+import "./ItemList.css";
 
-const ItemList = () => {
+const ItemList = ({ data }) => {
+  let categoryId = data.params.id ? parseInt(data.params.id) : 0;
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     axios
-      .get("https://mocki.io/v1/9e25fcd6-a045-42d5-9a19-08fedebcb414")
-      .then((response) => setItems(response.data));
-  }, []);
+      .get("https://mocki.io/v1/de181b41-132e-4ad3-ae3e-fbcbf501746c")
+      .then((response) =>
+        setItems(
+          categoryId === 0
+            ? response.data
+            : response.data.filter((item) => item.categoryId === categoryId)
+        )
+      );
+  }, [categoryId]);
 
   return (
-    <Container>
+    <Container className="Container">
       <Grid container spacing={3}>
         {items.length !== 0 ? (
           items.map((item, i) => {

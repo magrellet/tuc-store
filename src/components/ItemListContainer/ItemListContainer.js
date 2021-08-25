@@ -1,11 +1,8 @@
 import React from "react";
 import ItemList from "../items/ItemList";
 
-
-import "./ItemListContainer.css";
-
-const ItemListContainer = () => {
-  return <ItemList />;
+const ItemListContainer = ({ match }) => {
+  return <ItemList data={match} />;
 };
 
 export default ItemListContainer;

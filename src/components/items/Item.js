@@ -1,3 +1,4 @@
+import { Link, withRouter } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -7,14 +8,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 
 import ShareIcon from "@material-ui/icons/Share";
-import ItemCount from "./ItemCount";
 import { CardHeader } from "@material-ui/core";
-
 
 const Item = (props) => {
   const { item } = props;
-  const initialStock = 1;
-  const maxStock = 25;
+  const itemDetailUrl = `/item/${item.id}`;
 
   return (
     <Card className="Card" elevation={3}>
@@ -26,15 +24,16 @@ const Item = (props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
-          Ver Detalle
-        </Button>
+        <Link to={itemDetailUrl}>
+          <Button size="small" color="primary">
+            Ver Detalle
+          </Button>
+        </Link>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
       </CardActions>
       <CardActions>
-        <ItemCount initialStock={initialStock} maxStock={maxStock} />
         <Button size="small" color="primary">
           Agregar a Carrito
         </Button>
