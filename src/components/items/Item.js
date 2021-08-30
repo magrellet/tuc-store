@@ -1,4 +1,4 @@
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -32,12 +32,7 @@ const Item = (props) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-      </CardActions>
-      <CardActions>
-        <Button size="small" color="primary">
-          Agregar a Carrito
-        </Button>
-      </CardActions>
+      </CardActions>      
     </Card>
   );
 };

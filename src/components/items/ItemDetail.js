@@ -2,6 +2,9 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+
 import ItemCount from "./ItemCount";
 
 import "./ItemDetail.css";
@@ -29,6 +32,11 @@ const ItemDetail = ({ item }) => {
             Precio: {item.price}
           </Typography>
           <ItemCount initialStock={initialStock} maxStock={item.stock} />
+          <CardActions>
+            <Button size="small" color="primary">
+              Agregar a Carrito
+            </Button>
+          </CardActions>
         </Typography>
       </Grid>
     </Container>

@@ -8,11 +8,15 @@ const ItemDetailContainer = ({ match }) => {
   let itemId = parseInt(match.params.id);
   const [item, setItem] = useState("");
 
+
   useEffect(() => {
+    
     axios
       .get("https://mocki.io/v1/de181b41-132e-4ad3-ae3e-fbcbf501746c")
       .then((response) => {
-        setItem(response.data.filter((item) => item.id === itemId)[0]);
+        setTimeout(()=>{
+          setItem(response.data.filter((item) => item.id === itemId)[0]);
+        }, 1000);
       });
   }, [itemId]);
 

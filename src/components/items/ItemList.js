@@ -15,13 +15,15 @@ const ItemList = ({ data }) => {
   useEffect(() => {
     axios
       .get("https://mocki.io/v1/de181b41-132e-4ad3-ae3e-fbcbf501746c")
-      .then((response) =>
-        setItems(
-          categoryId === 0
-            ? response.data
-            : response.data.filter((item) => item.categoryId === categoryId)
-        )
-      );
+      .then((response) => {
+        setTimeout(() => {
+          setItems(
+            categoryId === 0
+              ? response.data
+              : response.data.filter((item) => item.categoryId === categoryId)
+          );
+        }, 1000);
+      });   
   }, [categoryId]);
 
   return (
