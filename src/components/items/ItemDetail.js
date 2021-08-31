@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +12,13 @@ import ItemCount from "./ItemCount";
 import "./ItemDetail.css";
 
 const ItemDetail = ({ item }) => {
-  const initialStock = 1;
+  const initialQuantity = 0;
+  const [itemQuantity, setItemQuantity] = useState(initialQuantity);
+
+  const onAdd = (quantityToAdd) => {
+    setItemQuantity(quantityToAdd);
+  };
+
   return (
     <Container maxWidth="sm" className="Container">
       <Grid container spacing={3}>
@@ -22,21 +30,34 @@ const ItemDetail = ({ item }) => {
             src={item.img}
             title="img"
           />
-          <Typography variant="h4" color="textPrimary">
+          <Typography className="Typography" variant="h4" color="textPrimary">
             {item.title}
           </Typography>
-          <Typography variant="h5" color="textSecondary">
+          <Typography className="Typography" variant="h5" color="textSecondary">
             {item.body}
           </Typography>
-          <Typography variant="h6" color="textSecondary">
+          <Typography className="Typography" variant="h6" color="textSecondary">
             Precio: {item.price}
           </Typography>
-          <ItemCount initialStock={initialStock} maxStock={item.stock} />
-          <CardActions>
-            <Button size="small" color="primary">
-              Agregar a Carrito
-            </Button>
-          </CardActions>
+          <ItemCount
+            initialQuantity={initialQuantity}
+            maxStock={item.stock}
+            onAdd={onAdd}
+          />
+          {itemQuantity > 0 && (
+            <CardActions>
+              <Link
+                to={{
+                  pathname: "/cart",
+                  state: { selectedItem: item, quantity: itemQuantity },
+                }}
+              >
+                <Button variant="contained" color="primary">
+                  Terminar mi compra
+                </Button>
+              </Link>
+            </CardActions>
+          )}
         </Typography>
       </Grid>
     </Container>
