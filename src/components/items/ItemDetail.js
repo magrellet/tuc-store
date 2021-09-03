@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -8,16 +8,23 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 
 import ItemCount from "./ItemCount";
+import { CartContext } from "../../context/CartContext";
 
 import "./ItemDetail.css";
 
 const ItemDetail = ({ item }) => {
   const initialQuantity = 0;
   const [itemQuantity, setItemQuantity] = useState(initialQuantity);
+  const { addItem } = useContext(CartContext);
 
   const onAdd = (quantityToAdd) => {
     setItemQuantity(quantityToAdd);
   };
+
+  //This does not work well, but as it is, I does not have a infinit console warning
+  useEffect(() => {
+    addItem(item, itemQuantity);
+  }, [item, itemQuantity]);
 
   return (
     <Container maxWidth="sm" className="Container">

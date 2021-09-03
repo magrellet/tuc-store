@@ -5,11 +5,12 @@ import NavBar from "./components/navBar/NavBar";
 import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
 import Cart from "./components/Cart/Cart";
+import { CartProvider } from "./context/CartContext";
 
 const App = () => {
   return (
-    <Router>
-      <div>
+    <CartProvider>
+      <Router>
         <NavBar />
         <Switch>
           <Route path="/" exact component={ItemListContainer} />
@@ -17,8 +18,8 @@ const App = () => {
           <Route path="/item/:id" component={ItemDetailContainer} />
           <Route path="/cart" component={Cart} />
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </CartProvider>
   );
 };
 
