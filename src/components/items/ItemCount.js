@@ -10,26 +10,28 @@ const ItemCount = (props) => {
   const [itemCount, setItemCount] = useState(initialQuantity);
   const itemStock = maxStock;
 
-  const increateItems = () => {
+  const increateItems = (e) => {
+    e.preventDefault();
     if (itemCount < itemStock) {
       setItemCount(itemCount + 1);      
     }
   };
 
-  const decreaseItems = () => {
+  const decreaseItems = (e) => {
+    e.preventDefault();
     setItemCount(Math.max(itemCount - 1, 0));
   };
 
   useEffect(() => {
     onAdd(itemCount);
- }, [itemCount, onAdd]);
+ }, [onAdd, itemCount]);
 
   return (
     <div>
-      <ButtonGroup>
-        <Button
-          onClick={() => {
-            decreaseItems();
+      <ButtonGroup color="primary">
+        <Button color="secondary"
+          onClick={(e) => {
+            decreaseItems(e);
           }}
         >
           <RemoveIcon fontSize="small" />
@@ -47,9 +49,9 @@ const ItemCount = (props) => {
             },
           }}
         />
-        <Button
-          onClick={() => {
-            increateItems();
+        <Button color="secondary"
+          onClick={(e) => {
+            increateItems(e);
           }}
         >
           <AddIcon fontSize="small" />

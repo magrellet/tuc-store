@@ -5,36 +5,43 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
-
+  
   const addItem = (item, quantity) => {
     if (quantity !== 0) {
-      let cartItem = {};
-      let localCartItems = [];
+      let cartItem = { item: item, quantity: quantity };
       if (isInCart(item.id)) {
-        removeItem(item.id);
-      }
-      cartItem = { item: item, quantity: quantity };
-      localCartItems = cartItems;
-      localCartItems.push(cartItem);
-      //This is temporarilly. State is not currently updating after finding and removing items
-      //The repited items are still there
-      setTotalQuantity(localCartItems.length);
-      setCartItems(localCartItems);
+        const localCartItems = cartItems.filter((element) => element.item.id !== item.id); 
+        localCartItems.push(cartItem);
+        setCartItems(localCartItems);
+      } else {
+        setCartItems([...cartItems, cartItem]);
+      }      
     }    
-    console.log(cartItems, totalQuantity);
+    setTotalQuantity(countItemQuantity(cartItems));
   };
 
   const removeItem = (itemId) => {
-    setCartItems(cartItems.filter((element) => element.item.id !== itemId));
+    const itemsToRemove = cartItems.filter(element => element.item.id !== itemId);
+    setCartItems(itemsToRemove);
+    setTotalQuantity(countItemQuantity(itemsToRemove));
   };
 
   const clear = () => {
     setCartItems([]);
+    setTotalQuantity(0);
   };
 
-  const isInCart = (id) => {
-    return cartItems.find((element) => element.item.id === id) !== undefined;
+  const isInCart = (itemId) => {
+    return cartItems.find(element => element.item.id === itemId) !== undefined;
   };
+
+  const countItemQuantity = (itemsToRemove) => {
+    let total = 0;
+    itemsToRemove.forEach(element => {
+      total += element.quantity;      
+    })
+    return total;
+  }
 
   return (
     <CartContext.Provider

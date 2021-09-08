@@ -17,18 +17,17 @@ const ItemDetail = ({ item }) => {
   const [itemQuantity, setItemQuantity] = useState(initialQuantity);
   const { addItem } = useContext(CartContext);
 
+  //This method is calling permanently the addItem in useContext after we click in an item count.
+  //Keep looking for a fix
   const onAdd = (quantityToAdd) => {
     setItemQuantity(quantityToAdd);
-  };
-
-  //This does not work well, but as it is, I does not have a infinit console warning
-  useEffect(() => {
     addItem(item, itemQuantity);
-  }, [item, itemQuantity]);
+  }; 
 
   return (
-    <Container maxWidth="sm" className="Container">
+    <Container maxWidth="sm" className="Container">      
       <Grid container spacing={3}>
+        {item &&
         <Typography component="div">
           <CardMedia
             component="img"
@@ -63,9 +62,16 @@ const ItemDetail = ({ item }) => {
                   Terminar mi compra
                 </Button>
               </Link>
+              <br />
+              <Link to={"/"}>
+                <Button variant="contained" color="primary">
+                  Seguir comprando
+                </Button>
+              </Link>
             </CardActions>
           )}
         </Typography>
+        }
       </Grid>
     </Container>
   );
