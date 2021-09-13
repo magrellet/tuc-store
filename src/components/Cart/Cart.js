@@ -31,17 +31,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = () => {
-  const { cartItems, removeItem } = useContext(CartContext);
+  const { cartItems, removeItem, clear } = useContext(CartContext);
   const classes = useStyles();
 
   return (
     <div>
       {cartItems.length !== 0 ? (
-        cartItems.map((cartItem, i) => {          
+        cartItems.map((cartItem, i) => {
           return (
             <div className={classes.root}>
-              <Paper key = {i} className={classes.paper}>
-                <Grid key = {i} container spacing={2}>
+              <Paper key={i} className={classes.paper}>
+                <Grid key={i} container spacing={2}>
                   <Grid item>
                     <ButtonBase className={classes.image}>
                       <img
@@ -78,7 +78,7 @@ const Cart = () => {
                         Cantidad: {cartItem.quantity}
                       </Typography>
                       <Typography variant="subtitle1">
-                        Precio total: {parseFloat(cartItem.item.price.replace(',', '.')) * cartItem.quantity}
+                        Precio total: {cartItem.item.price * cartItem.quantity}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -99,6 +99,21 @@ const Cart = () => {
             </Link>
           </Typography>
         </Grid>
+      )}
+      {cartItems.length !== 0 ? (
+        <Grid key="id" container spacing={2}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              clear();
+            }}
+          >
+            Limpiar carrito
+          </Button>
+        </Grid>
+      ) : (
+        <div></div>
       )}
     </div>
   );

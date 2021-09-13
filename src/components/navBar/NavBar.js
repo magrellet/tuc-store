@@ -19,13 +19,13 @@ const NavBar = () => {
         </Typography>
         <section className="Menu-Button">
           <Link to="/">
-            <Button color="inherit">Productos</Button>
+            <Button color="inherit">Todos los Libros</Button>
           </Link>
           <Link to={`${categoryBasePath}1`}>
-            <Button color="inherit">Marcas</Button>
+            <Button color="inherit">Libros en ingles</Button>
           </Link>
           <Link to={`${categoryBasePath}2`}>
-            <Button color="inherit">Sale!</Button>
+            <Button color="inherit">Libros en castellano</Button>
           </Link>
           <Button color="inherit">
             <CartWidget />

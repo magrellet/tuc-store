@@ -2,23 +2,27 @@ import React, { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ItemDetail from "../items/ItemDetail";
 
-import axios from "axios";
+import { db } from "../firebase";
+import { collection, getDocs } from "firebase/firestore/lite";
 
 const ItemDetailContainer = ({ match }) => {
-  let itemId = parseInt(match.params.id);
+  let itemId = match.params.id;
   const [item, setItem] = useState("");
 
-
   useEffect(() => {
-    
-    axios
-      .get("https://mocki.io/v1/de181b41-132e-4ad3-ae3e-fbcbf501746c")
-      .then((response) => {
-        setTimeout(()=>{
-          setItem(response.data.filter((item) => item.id === itemId)[0]);
-        }, 1000);
+    const getProducts = async (db) => {
+      const products = collection(db, "products");
+      const productsSnapshot = await getDocs(products);
+
+      const productsList = [];
+      productsSnapshot.forEach((element) => {
+        productsList.push({...element.data(), id: element.id});
       });
-  }, [itemId]);
+
+      setItem(productsList.filter((item) => item.id === itemId)[0]);      
+    }
+    getProducts(db)
+  },[itemId]);
 
   return (
     <div>{item !== "" ? <ItemDetail item={item} /> : <CircularProgress />}</div>

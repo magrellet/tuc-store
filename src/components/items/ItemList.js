@@ -3,7 +3,8 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import axios from "axios";
+import { db } from "../firebase";
+import { collection, getDocs } from "firebase/firestore/lite";
 
 import Item from "./Item";
 import "./ItemList.css";
@@ -13,17 +14,22 @@ const ItemList = ({ data }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://mocki.io/v1/de181b41-132e-4ad3-ae3e-fbcbf501746c")
-      .then((response) => {
-        setTimeout(() => {
-          setItems(
-            categoryId === 0
-              ? response.data
-              : response.data.filter((item) => item.categoryId === categoryId)
-          );
-        }, 1000);
-      });   
+    const getProducts = async (db) => {
+      const products = collection(db, "products");
+      const productsSnapshot = await getDocs(products);
+
+      const productsList = [];
+      productsSnapshot.forEach((element) => {
+        productsList.push({ ...element.data(), id: element.id });
+      });
+
+      setItems(
+        categoryId === 0
+          ? productsList
+          : productsList.filter((item) => item.categoryId === categoryId)
+      );
+    };
+    getProducts(db);
   }, [categoryId]);
 
   return (
