@@ -17,7 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import { CartContext } from "../../context/CartContext";
 
 import { db } from "../firebase";
-import { collection, setDoc, doc, Timestamp } from "firebase/firestore/lite";
+import { setDoc, doc, updateDoc, Timestamp } from "firebase/firestore/lite";
 
 import { v4 as uuid } from "uuid";
 
@@ -78,8 +78,6 @@ const Cart = () => {
       setBuyer({ name: name, phone: phone, email: email });
     }
     handleOrder();
-
-    //TODO: Pushear a firebase y actualizar stock en items
     setOpen(true);
   };
 
@@ -87,7 +85,7 @@ const Cart = () => {
     const myItems = [];
     let totalQuantity = 0;
     cartItems.forEach((item) => {
-      //updateStock(item);
+      updateStockInProduct(item);
       totalQuantity += item.quantity * item.item.price;
       myItems.push({
         title: item.item.title,
@@ -101,20 +99,17 @@ const Cart = () => {
       total: totalQuantity,
       date: Timestamp.fromDate(new Date()),
     };
-    handleInsert(myOrder);
+    saveOrder(myOrder);
   };
 
-  //TODO: Update de stock sin funcionar
-  /*const updateStock = async (item) => {
-    await db
-      .collection("products")
-      .doc(item.item.id)
-      .update({
-        stock: item.item.stock - item.quantity,
-      });
-  };*/
+  const updateStockInProduct = async (item) => {    
+    const productRef = doc(db, "products", item.item.id);
+    await updateDoc(productRef, {
+      stock: item.item.stock - item.quantity
+    });
+  };
 
-  const handleInsert = async (myOrder) => {
+  const saveOrder = async (myOrder) => {
     await setDoc(doc(db, "orders", orderId), myOrder);
   };
 
