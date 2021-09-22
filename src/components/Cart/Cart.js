@@ -15,7 +15,11 @@ import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 
 import { CartContext } from "../../context/CartContext";
-import { StarRateSharp } from "@material-ui/icons";
+
+import { db } from "../firebase";
+import { collection, setDoc, doc, Timestamp } from "firebase/firestore/lite";
+
+import { v4 as uuid } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,10 +53,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const buyProducts = (products) => {
-  //alert(products);
-};
-
 const buyerDefaultValues = {
   name: "Martin",
   phone: "381xxxxxxx",
@@ -62,25 +62,60 @@ const buyerDefaultValues = {
 const Cart = () => {
   const { cartItems, removeItem, clear } = useContext(CartContext);
   const [open, setOpen] = useState(false);
-  const [order, setOrder] = useState([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [buyer, setBuyer] = useState(buyerDefaultValues);
+  const [orderId, setOrderId] = useState(uuid);
   const classes = useStyles();
 
+  useEffect(() => {
+    setBuyer({ name: name, phone: phone, email: email });
+  }, [name, phone, email]);
+
   const handleClickOpen = () => {
-    const myOrder = [];
+    if (name !== "" && email !== "" && phone !== "") {
+      setBuyer({ name: name, phone: phone, email: email });
+    }
+    handleOrder();
+
+    //TODO: Pushear a firebase y actualizar stock en items
+    setOpen(true);
+  };
+
+  const handleOrder = () => {
     const myItems = [];
     let totalQuantity = 0;
-    cartItems.forEach((item) => {  
-      totalQuantity += item.quantity;
+    cartItems.forEach((item) => {
+      //updateStock(item);
+      totalQuantity += item.quantity * item.item.price;
       myItems.push({
         title: item.item.title,
         id: item.item.id,
         price: item.item.price,
       });
     });
-    myOrder.push({ buyer: buyerDefaultValues, items: myItems, total: totalQuantity, date: new Date() });
-    console.log("MY ORDER: ", myOrder)
-    //TODO: Pushear a firebase y actualizar stock en items
-    setOpen(true);
+    const myOrder = {
+      buyer: buyer,
+      items: myItems,
+      total: totalQuantity,
+      date: Timestamp.fromDate(new Date()),
+    };
+    handleInsert(myOrder);
+  };
+
+  //TODO: Update de stock sin funcionar
+  /*const updateStock = async (item) => {
+    await db
+      .collection("products")
+      .doc(item.item.id)
+      .update({
+        stock: item.item.stock - item.quantity,
+      });
+  };*/
+
+  const handleInsert = async (myOrder) => {
+    await setDoc(doc(db, "orders", orderId), myOrder);
   };
 
   const handleClose = () => {
@@ -160,21 +195,30 @@ const Cart = () => {
             <div className={classes.form}>
               <TextField
                 required
-                id="standard-required"
-                label="Required"
-                defaultValue="Name"
+                id="name"
+                label="Nombre"
+                type="email"
+                defaultValue={name}
+                onChange={(e) => setName(e.target.value)}
               />
               <TextField
                 required
-                id="standard-required"
-                label="Required"
-                defaultValue="Phone"
+                id="phone"
+                label="Telefono"
+                defaultValue={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                type="number"
+                inputProps={{
+                  inputMode: "numeric",
+                  pattern: "[0-9]*",
+                }}
               />
               <TextField
                 required
-                id="standard-required"
-                label="Required"
-                defaultValue="Email"
+                id="email"
+                label="Email"
+                defaultValue={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </form>
@@ -188,6 +232,7 @@ const Cart = () => {
             Limpiar carrito
           </Button>
           <Button
+            disabled={!(name !== "" && email !== "" && phone !== "")}
             variant="contained"
             color="primary"
             onClick={() => {
@@ -209,7 +254,7 @@ const Cart = () => {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
-                Aca la compra.
+                Numero de transacción: {orderId}.
               </DialogContentText>
             </DialogContent>
             <DialogActions>
