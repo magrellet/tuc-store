@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import TextField from "@material-ui/core/TextField";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
+import TextField from '@mui/material/TextField';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const ItemCount = (props) => {
   const { initialQuantity, maxStock, onAdd } = props;
@@ -28,15 +28,7 @@ const ItemCount = (props) => {
 
   return (
     <div>
-      <ButtonGroup color="primary">
-        <Button color="secondary"
-          onClick={(e) => {
-            decreaseItems(e);
-          }}
-        >
-          <RemoveIcon fontSize="small" />
-        </Button>
-        <TextField
+      <TextField
           label="Cantidad"
           variant="outlined"
           value={itemCount}
@@ -49,6 +41,15 @@ const ItemCount = (props) => {
             },
           }}
         />
+      <ButtonGroup color="primary">
+        <Button color="secondary"
+          onClick={(e) => {
+            decreaseItems(e);
+          }}
+        >
+          <RemoveIcon fontSize="small" />
+        </Button>
+        
         <Button color="secondary"
           onClick={(e) => {
             increateItems(e);

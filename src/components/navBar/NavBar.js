@@ -1,13 +1,11 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 
 import CartWidget from "./CartWidget";
-
-import "./NavBar.css";
 
 const NavBar = () => {
   const categoryBasePath = "/category/";
@@ -27,9 +25,7 @@ const NavBar = () => {
           <Link to={`${categoryBasePath}2`}>
             <Button color="inherit">Libros en castellano</Button>
           </Link>
-          <Button color="inherit">
             <CartWidget />
-          </Button>
         </section>
       </Toolbar>
     </AppBar>

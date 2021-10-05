@@ -1,18 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
-import TextField from "@material-ui/core/TextField";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import ButtonBase from "@mui/material/ButtonBase";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import TextField from "@mui/material/TextField";
+
+import { styled } from "@mui/material/styles";
 
 import { CartContext } from "../../context/CartContext";
 
@@ -21,34 +23,13 @@ import { setDoc, doc, updateDoc, Timestamp } from "firebase/firestore/lite";
 
 import { v4 as uuid } from "uuid";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: "10px",
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
-  paper: {
-    padding: theme.spacing(2),
-    margin: "auto",
-    maxWidth: 500,
-  },
-  image: {
-    width: 128,
-    height: 128,
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  },
-  form: {
-    padding: "4px",
-  },
-}));
+const Img = styled("img")({
+  margin: "auto",
+  display: "block",
+  maxWidth: "100%",
+  maxHeight: "100%",
+});
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -67,7 +48,6 @@ const Cart = () => {
   const [phone, setPhone] = useState("");
   const [buyer, setBuyer] = useState(buyerDefaultValues);
   const [orderId, setOrderId] = useState(uuid);
-  const classes = useStyles();
 
   useEffect(() => {
     setBuyer({ name: name, phone: phone, email: email });
@@ -102,10 +82,10 @@ const Cart = () => {
     saveOrder(myOrder);
   };
 
-  const updateStockInProduct = async (item) => {    
+  const updateStockInProduct = async (item) => {
     const productRef = doc(db, "products", item.item.id);
     await updateDoc(productRef, {
-      stock: item.item.stock - item.quantity
+      stock: item.item.stock - item.quantity,
     });
   };
 
@@ -122,53 +102,55 @@ const Cart = () => {
     <div>
       {cartItems.length !== 0 ? (
         cartItems.map((cartItem, i) => {
+          console.log(i);
           return (
-            <div className={classes.root}>
-              <Paper key={i} className={classes.paper}>
-                <Grid key={i} container spacing={2}>
-                  <Grid item>
-                    <ButtonBase className={classes.image}>
-                      <img
-                        className={classes.img}
-                        alt="complex"
-                        src={cartItem.item.img}
-                      />
-                    </ButtonBase>
-                  </Grid>
-                  <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
-                      <Grid item xs>
-                        <Typography gutterBottom variant="subtitle1">
-                          {cartItem.item.title}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography
-                          variant="body2"
-                          style={{ cursor: "pointer" }}
-                        >
-                          <Button
-                            onClick={() => {
-                              removeItem(cartItem.item.id);
-                            }}
-                          >
-                            Remover
-                          </Button>
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1">
+            <Paper
+              id={i}
+              sx={{ p: 2, margin: "auto", maxWidth: 500, flexGrow: 1 }}
+            >
+              <Grid container spacing={2}>
+                <Grid item>
+                  <ButtonBase sx={{ width: 128, height: 128 }}>
+                    <Img alt="complex" src={cartItem.item.img} />
+                  </ButtonBase>
+                </Grid>
+                <Grid item xs={12} sm container>
+                  <Grid item xs container direction="column" spacing={2}>
+                    <Grid item xs>
+                      <Typography
+                        gutterBottom
+                        variant="subtitle1"
+                        component="div"
+                      >
+                        {cartItem.item.title}
+                      </Typography>
+                      <Typography variant="body2" gutterBottom>
+                        Full resolution 1920x1080 • JPEG
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
                         Cantidad: {cartItem.quantity}
                       </Typography>
-                      <Typography variant="subtitle1">
-                        Precio total: {cartItem.item.price * cartItem.quantity}
+                    </Grid>
+                    <Grid item>
+                      <Typography sx={{ cursor: "pointer" }} variant="body2">
+                        <Button
+                          onClick={() => {
+                            removeItem(cartItem.item.id);
+                          }}
+                        >
+                          Remover
+                        </Button>
                       </Typography>
                     </Grid>
                   </Grid>
+                  <Grid item>
+                    <Typography variant="subtitle1" component="div">
+                    Precio total: {cartItem.item.price * cartItem.quantity}
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Paper>
-            </div>
+              </Grid>
+            </Paper>
           );
         })
       ) : (
@@ -186,8 +168,8 @@ const Cart = () => {
       )}
       {cartItems.length !== 0 ? (
         <Grid key="id" container spacing={4}>
-          <form className={classes.root} noValidate autoComplete="off">
-            <div className={classes.form}>
+          <form noValidate autoComplete="off">
+            <div>
               <TextField
                 required
                 id="name"

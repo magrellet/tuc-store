@@ -1,21 +1,19 @@
 import { Link } from "react-router-dom";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-
-import ShareIcon from "@material-ui/icons/Share";
-import { CardHeader } from "@material-ui/core";
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const Item = (props) => {
   const { item } = props;
   const itemDetailUrl = `/item/${item.id}`;
 
   return (
-    <Card className="Card" elevation={3}>
+    <Card sx={{ maxWidth: 345 }} >
       <CardHeader title={item.title} />
       <CardMedia component="img" title="image" src={item.img} />
       <CardContent>
@@ -25,12 +23,11 @@ const Item = (props) => {
       </CardContent>
       <CardActions>
         <Link to={itemDetailUrl}>
-          <Button size="small" color="primary">
+          <Button size="small">
             Ver Detalle
           </Button>
         </Link>
         <IconButton aria-label="share">
-          <ShareIcon />
         </IconButton>
       </CardActions>      
     </Card>

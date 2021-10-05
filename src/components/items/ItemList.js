@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore/lite";
 
 import Item from "./Item";
-import "./ItemList.css";
 
 const ItemList = ({ data }) => {
   let categoryId = data.params.id ? parseInt(data.params.id) : 0;
