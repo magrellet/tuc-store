@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
@@ -22,8 +21,7 @@ const ItemDetail = ({ item }) => {
   }; 
 
   return (
-    <Container maxWidth="sm" className="Container">      
-      <Grid container spacing={3}>
+      <Card sx={{ p: 4, m: 5, mx: 70, maxWidth: 400, flexGrow: 1  }}>
         {item &&
         <Typography component="div">
           <CardMedia
@@ -69,8 +67,7 @@ const ItemDetail = ({ item }) => {
           )}
         </Typography>
         }
-      </Grid>
-    </Container>
+      </Card>
   );
 };
 

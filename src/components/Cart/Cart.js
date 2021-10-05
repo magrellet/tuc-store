@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
+
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -102,11 +103,10 @@ const Cart = () => {
     <div>
       {cartItems.length !== 0 ? (
         cartItems.map((cartItem, i) => {
-          console.log(i);
           return (
             <Paper
               id={i}
-              sx={{ p: 2, margin: "auto", maxWidth: 500, flexGrow: 1 }}
+              sx={{ p: 4, m: 5, mx: 70, maxWidth: 500, flexGrow: 1 }}
             >
               <Grid container spacing={2}>
                 <Grid item>
@@ -145,7 +145,7 @@ const Cart = () => {
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" component="div">
-                    Precio total: {cartItem.item.price * cartItem.quantity}
+                      Precio total: {cartItem.item.price * cartItem.quantity}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -167,80 +167,85 @@ const Cart = () => {
         </Grid>
       )}
       {cartItems.length !== 0 ? (
-        <Grid key="id" container spacing={4}>
-          <form noValidate autoComplete="off">
-            <div>
-              <TextField
-                required
-                id="name"
-                label="Nombre"
-                type="email"
-                defaultValue={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <TextField
-                required
-                id="phone"
-                label="Telefono"
-                defaultValue={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                type="number"
-                inputProps={{
-                  inputMode: "numeric",
-                  pattern: "[0-9]*",
-                }}
-              />
-              <TextField
-                required
-                id="email"
-                label="Email"
-                defaultValue={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </form>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              clear();
-            }}
-          >
-            Limpiar carrito
-          </Button>
-          <Button
-            disabled={!(name !== "" && email !== "" && phone !== "")}
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleClickOpen();
-            }}
-          >
-            Comprar
-          </Button>
-          <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle id="alert-dialog-slide-title">
-              {"Compra realizada"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
-                Numero de transacción: {orderId}.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                OK
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
+        <Paper sx={{ p: 4, px: 40, m: 5, mx: 10, flexGrow: 1 }}>
+          <Grid key="id" container spacing={1}>
+            <TextField
+              required
+              id="name"
+              label="Nombre"
+              type="email"
+              defaultValue={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Box sx={{ p: 1 }} />
+            <TextField
+              required
+              id="phone"
+              label="Telefono"
+              defaultValue={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              type="number"
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+              }}
+            />
+            <Box sx={{ p: 1 }} />
+
+            <TextField
+              required
+              id="email"
+              label="Email"
+              defaultValue={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Box sx={{ p: 1 }} />
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                clear();
+              }}
+            >
+              Limpiar carrito
+            </Button>
+            <Box sx={{ p: 1 }} />
+
+            <Button
+              disabled={!(name !== "" && email !== "" && phone !== "")}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handleClickOpen();
+              }}
+            >
+              Comprar
+            </Button>
+            <Dialog
+              open={open}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-slide-title"
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle id="alert-dialog-slide-title">
+                {"Compra realizada"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  Numero de transacción: {orderId}.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+        </Paper>
       ) : (
         <div></div>
       )}

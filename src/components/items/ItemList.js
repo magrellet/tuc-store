@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import CircularProgress from '@mui/material/CircularProgress';
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore/lite";
@@ -32,7 +32,7 @@ const ItemList = ({ data }) => {
   }, [categoryId]);
 
   return (
-    <Container className="Container">
+    <Paper sx={{ p: 4, margin: "auto", flexGrow: 1 }}>
       <Grid container spacing={3}>
         {items.length !== 0 ? (
           items.map((item, i) => {
@@ -46,7 +46,7 @@ const ItemList = ({ data }) => {
           <CircularProgress />
         )}
       </Grid>
-    </Container>
+    </Paper>
   );
 };
 
