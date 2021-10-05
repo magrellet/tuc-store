@@ -1,38 +1,36 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 import CartWidget from "./CartWidget";
 
-import "./NavBar.css";
-
 const NavBar = () => {
   const categoryBasePath = "/category/";
+  const firstCategory = `${categoryBasePath}1`
+  const secondCategory = `${categoryBasePath}2`
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h4">
-          <Link to="/"> Tuc Store e-commerce</Link>
-        </Typography>
-        <section className="Menu-Button">
-          <Link to="/">
-            <Button color="inherit">Todos los Libros</Button>
-          </Link>
-          <Link to={`${categoryBasePath}1`}>
-            <Button color="inherit">Libros en ingles</Button>
-          </Link>
-          <Link to={`${categoryBasePath}2`}>
-            <Button color="inherit">Libros en castellano</Button>
-          </Link>
-          <Button color="inherit">
-            <CartWidget />
-          </Button>
-        </section>
-      </Toolbar>
-    </AppBar>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+        <Typography variant="h4" component={Link} to = "/" sx={{ flexGrow: 1 }}>
+          Tuc Store e-commerce
+          </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Button component={Link} to="/" color="inherit">Todos los Libros</Button>
+              <Button component={Link} to={firstCategory} color="inherit">Libros en ingles</Button>
+              <Button component={Link} to={secondCategory} color="inherit">Libros en castellano</Button>            
+            <Link to="/cart">
+              <CartWidget />
+            </Link>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 

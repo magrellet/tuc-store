@@ -1,32 +1,27 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 import ItemCount from "./ItemCount";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../../context/CartContext";
 
-import "./ItemDetail.css";
 
 const ItemDetail = ({ item }) => {
   const initialQuantity = 0;
   const [itemQuantity, setItemQuantity] = useState(initialQuantity);
   const { addItem } = useContext(CartContext);
 
-  //This method is calling permanently the addItem in useContext after we click in an item count.
-  //Keep looking for a fix
   const onAdd = (quantityToAdd) => {
     setItemQuantity(quantityToAdd);
     addItem(item, itemQuantity);
   }; 
 
   return (
-    <Container maxWidth="sm" className="Container">      
-      <Grid container spacing={3}>
+      <Card sx={{ p: 4, m: 5, mx: 70, maxWidth: 400, flexGrow: 1  }}>
         {item &&
         <Typography component="div">
           <CardMedia
@@ -51,29 +46,19 @@ const ItemDetail = ({ item }) => {
             onAdd={onAdd}
           />
           {itemQuantity > 0 && (
-            <CardActions>
-              <Link
-                to={{
-                  pathname: "/cart",
-                  state: { selectedItem: item, quantity: itemQuantity },
-                }}
-              >
-                <Button variant="contained" color="primary">
-                  Terminar mi compra
-                </Button>
-              </Link>
+            <CardActions>              
+              <Button component={Link} to="/cart" variant="contained" color="primary">
+                Ver a carrito
+              </Button>
               <br />
-              <Link to={"/"}>
-                <Button variant="contained" color="primary">
-                  Seguir comprando
-                </Button>
-              </Link>
+              <Button component={Link} to="/" variant="contained" color="primary">
+                Seguir comprando
+              </Button>
             </CardActions>
           )}
         </Typography>
         }
-      </Grid>
-    </Container>
+      </Card>
   );
 };
 

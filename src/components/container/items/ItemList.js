@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore/lite";
 
 import Item from "./Item";
-import "./ItemList.css";
 
 const ItemList = ({ data }) => {
   let categoryId = data.params.id ? parseInt(data.params.id) : 0;
@@ -33,7 +32,7 @@ const ItemList = ({ data }) => {
   }, [categoryId]);
 
   return (
-    <Container className="Container">
+    <Paper sx={{ p: 4, margin: "auto", flexGrow: 1 }}>
       <Grid container spacing={3}>
         {items.length !== 0 ? (
           items.map((item, i) => {
@@ -47,7 +46,7 @@ const ItemList = ({ data }) => {
           <CircularProgress />
         )}
       </Grid>
-    </Container>
+    </Paper>
   );
 };
 

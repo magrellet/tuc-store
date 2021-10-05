@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import ItemDetail from "../items/ItemDetail";
+import CircularProgress from "@mui/material/CircularProgress";
+import ItemDetail from "./items/ItemDetail";
 
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore/lite";

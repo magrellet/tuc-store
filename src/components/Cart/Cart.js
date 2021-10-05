@@ -1,18 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
-import TextField from "@material-ui/core/TextField";
+
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import TextField from "@mui/material/TextField";
 
 import { CartContext } from "../../context/CartContext";
 
@@ -20,35 +20,9 @@ import { db } from "../firebase";
 import { setDoc, doc, updateDoc, Timestamp } from "firebase/firestore/lite";
 
 import { v4 as uuid } from "uuid";
+import CartItemDetail from "./CartItemDetail";
+import EmptyCart from "./EmptyCart";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: "10px",
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
-  paper: {
-    padding: theme.spacing(2),
-    margin: "auto",
-    maxWidth: 500,
-  },
-  image: {
-    width: 128,
-    height: 128,
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  },
-  form: {
-    padding: "4px",
-  },
-}));
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -67,7 +41,6 @@ const Cart = () => {
   const [phone, setPhone] = useState("");
   const [buyer, setBuyer] = useState(buyerDefaultValues);
   const [orderId, setOrderId] = useState(uuid);
-  const classes = useStyles();
 
   useEffect(() => {
     setBuyer({ name: name, phone: phone, email: email });
@@ -102,10 +75,10 @@ const Cart = () => {
     saveOrder(myOrder);
   };
 
-  const updateStockInProduct = async (item) => {    
+  const updateStockInProduct = async (item) => {
     const productRef = doc(db, "products", item.item.id);
     await updateDoc(productRef, {
-      stock: item.item.stock - item.quantity
+      stock: item.item.stock - item.quantity,
     });
   };
 
@@ -123,142 +96,89 @@ const Cart = () => {
       {cartItems.length !== 0 ? (
         cartItems.map((cartItem, i) => {
           return (
-            <div className={classes.root}>
-              <Paper key={i} className={classes.paper}>
-                <Grid key={i} container spacing={2}>
-                  <Grid item>
-                    <ButtonBase className={classes.image}>
-                      <img
-                        className={classes.img}
-                        alt="complex"
-                        src={cartItem.item.img}
-                      />
-                    </ButtonBase>
-                  </Grid>
-                  <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
-                      <Grid item xs>
-                        <Typography gutterBottom variant="subtitle1">
-                          {cartItem.item.title}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography
-                          variant="body2"
-                          style={{ cursor: "pointer" }}
-                        >
-                          <Button
-                            onClick={() => {
-                              removeItem(cartItem.item.id);
-                            }}
-                          >
-                            Remover
-                          </Button>
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1">
-                        Cantidad: {cartItem.quantity}
-                      </Typography>
-                      <Typography variant="subtitle1">
-                        Precio total: {cartItem.item.price * cartItem.quantity}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </div>
+            <CartItemDetail cartItem={cartItem} i={i} removeItem={removeItem} />
           );
         })
       ) : (
-        <Grid item>
-          <Typography variant="subtitle1">
-            El carrito esta vacio
-            <br />
-            <Link to={"/"}>
-              <Button variant="contained" color="primary">
-                Agregar items a mi carrito
-              </Button>
-            </Link>
-          </Typography>
-        </Grid>
+        <EmptyCart /> 
       )}
       {cartItems.length !== 0 ? (
-        <Grid key="id" container spacing={4}>
-          <form className={classes.root} noValidate autoComplete="off">
-            <div className={classes.form}>
-              <TextField
-                required
-                id="name"
-                label="Nombre"
-                type="email"
-                defaultValue={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <TextField
-                required
-                id="phone"
-                label="Telefono"
-                defaultValue={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                type="number"
-                inputProps={{
-                  inputMode: "numeric",
-                  pattern: "[0-9]*",
-                }}
-              />
-              <TextField
-                required
-                id="email"
-                label="Email"
-                defaultValue={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </form>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              clear();
-            }}
-          >
-            Limpiar carrito
-          </Button>
-          <Button
-            disabled={!(name !== "" && email !== "" && phone !== "")}
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleClickOpen();
-            }}
-          >
-            Comprar
-          </Button>
-          <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle id="alert-dialog-slide-title">
-              {"Compra realizada"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
-                Numero de transacción: {orderId}.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                OK
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
+        <Paper sx={{ p: 4, px: 40, m: 5, mx: 10, flexGrow: 1 }}>
+          <Grid key="id" container spacing={1}>
+            <TextField
+              required
+              id="name"
+              label="Nombre"
+              type="email"
+              defaultValue={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Box sx={{ p: 1 }} />
+            <TextField
+              required
+              id="phone"
+              label="Telefono"
+              defaultValue={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              type="number"
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+              }}
+            />
+            <Box sx={{ p: 1 }} />
+            <TextField
+              required
+              id="email"
+              label="Email"
+              defaultValue={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Box sx={{ p: 1 }} />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                clear();
+              }}
+            >
+              Limpiar carrito
+            </Button>
+            <Box sx={{ p: 1 }} />
+            <Button
+              disabled={!(name !== "" && email !== "" && phone !== "")}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handleClickOpen();
+              }}
+            >
+              Comprar
+            </Button>
+            <Dialog
+              open={open}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-slide-title"
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle id="alert-dialog-slide-title">
+                {"Compra realizada"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  Numero de transacción: {orderId}.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+        </Paper>
       ) : (
         <div></div>
       )}
