@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
@@ -15,21 +14,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
 
-import { styled } from "@mui/material/styles";
-
 import { CartContext } from "../../context/CartContext";
 
 import { db } from "../firebase";
 import { setDoc, doc, updateDoc, Timestamp } from "firebase/firestore/lite";
 
 import { v4 as uuid } from "uuid";
-
-const Img = styled("img")({
-  margin: "auto",
-  display: "block",
-  maxWidth: "100%",
-  maxHeight: "100%",
-});
+import CartItemDetail from "./CartItemDetail";
+import EmptyCart from "./EmptyCart";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -104,67 +96,11 @@ const Cart = () => {
       {cartItems.length !== 0 ? (
         cartItems.map((cartItem, i) => {
           return (
-            <Paper
-              id={i}
-              sx={{ p: 4, m: 5, mx: 70, maxWidth: 500, flexGrow: 1 }}
-            >
-              <Grid container spacing={2}>
-                <Grid item>
-                  <ButtonBase sx={{ width: 128, height: 128 }}>
-                    <Img alt="complex" src={cartItem.item.img} />
-                  </ButtonBase>
-                </Grid>
-                <Grid item xs={12} sm container>
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <Typography
-                        gutterBottom
-                        variant="subtitle1"
-                        component="div"
-                      >
-                        {cartItem.item.title}
-                      </Typography>
-                      <Typography variant="body2" gutterBottom>
-                        Full resolution 1920x1080 • JPEG
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Cantidad: {cartItem.quantity}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography sx={{ cursor: "pointer" }} variant="body2">
-                        <Button
-                          onClick={() => {
-                            removeItem(cartItem.item.id);
-                          }}
-                        >
-                          Remover
-                        </Button>
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle1" component="div">
-                      Precio total: {cartItem.item.price * cartItem.quantity}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Paper>
+            <CartItemDetail cartItem={cartItem} i={i} removeItem={removeItem} />
           );
         })
       ) : (
-        <Grid item>
-          <Typography variant="subtitle1">
-            El carrito esta vacio
-            <br />
-            <Link to={"/"}>
-              <Button variant="contained" color="primary">
-                Agregar items a mi carrito
-              </Button>
-            </Link>
-          </Typography>
-        </Grid>
+        <EmptyCart /> 
       )}
       {cartItems.length !== 0 ? (
         <Paper sx={{ p: 4, px: 40, m: 5, mx: 10, flexGrow: 1 }}>
@@ -191,7 +127,6 @@ const Cart = () => {
               }}
             />
             <Box sx={{ p: 1 }} />
-
             <TextField
               required
               id="email"
@@ -200,7 +135,6 @@ const Cart = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Box sx={{ p: 1 }} />
-
             <Button
               variant="contained"
               color="primary"
@@ -211,7 +145,6 @@ const Cart = () => {
               Limpiar carrito
             </Button>
             <Box sx={{ p: 1 }} />
-
             <Button
               disabled={!(name !== "" && email !== "" && phone !== "")}
               variant="contained"

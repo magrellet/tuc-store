@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 import ItemCount from "./ItemCount";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../../context/CartContext";
 
 
 const ItemDetail = ({ item }) => {
@@ -46,23 +46,14 @@ const ItemDetail = ({ item }) => {
             onAdd={onAdd}
           />
           {itemQuantity > 0 && (
-            <CardActions>
-              <Link
-                to={{
-                  pathname: "/cart",
-                  state: { selectedItem: item, quantity: itemQuantity },
-                }}
-              >
-                <Button variant="contained" color="primary">
-                  Terminar mi compra
-                </Button>
-              </Link>
+            <CardActions>              
+              <Button component={Link} to="/cart" variant="contained" color="primary">
+                Ver a carrito
+              </Button>
               <br />
-              <Link to={"/"}>
-                <Button variant="contained" color="primary">
-                  Seguir comprando
-                </Button>
-              </Link>
+              <Button component={Link} to="/" variant="contained" color="primary">
+                Seguir comprando
+              </Button>
             </CardActions>
           )}
         </Typography>

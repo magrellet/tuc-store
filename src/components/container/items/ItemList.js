@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore/lite";
 
 import Item from "./Item";
