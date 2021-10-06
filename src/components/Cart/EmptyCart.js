@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 
 const EmptyCart = () => {
   return (
-    <Paper id="id" sx={{ p: 4, m: 5, mx: 70, maxWidth: 500, flexGrow: 1 }}>
+    <Paper id="id" sx={{ p: 4, m: 5, mr: "auto", ml: "auto",  maxWidth: 500, flexGrow: 1 }}>
       <Grid container spacing={2}></Grid>
       <Grid item>
         <Typography variant="subtitle1">

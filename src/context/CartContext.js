@@ -17,7 +17,7 @@ export const CartProvider = ({ children }) => {
         setCartItems([...cartItems, cartItem]);
       }      
     }    
-    setTotalQuantity(countItemQuantity(cartItems));
+    setTotalQuantity(quantity === 0 ? quantity : countItemQuantity(cartItems));
   };
 
   const removeItem = (itemId) => {

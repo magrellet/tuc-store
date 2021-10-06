@@ -1,14 +1,13 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import CardActions from '@mui/material/CardActions';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import CardActions from "@mui/material/CardActions";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import ItemCount from "./ItemCount";
 import { CartContext } from "../../../context/CartContext";
-
 
 const ItemDetail = ({ item }) => {
   const initialQuantity = 0;
@@ -17,12 +16,12 @@ const ItemDetail = ({ item }) => {
 
   const onAdd = (quantityToAdd) => {
     setItemQuantity(quantityToAdd);
-    addItem(item, itemQuantity);
+    addItem(item, quantityToAdd);
   }; 
 
   return (
-      <Card sx={{ p: 4, m: 5, mx: 70, maxWidth: 400, flexGrow: 1  }}>
-        {item &&
+    <Card sx={{ p: 4, m: 5, mr: "auto", ml: "auto", maxWidth: 400 }}>
+      {item && (
         <Typography component="div">
           <CardMedia
             component="img"
@@ -46,19 +45,29 @@ const ItemDetail = ({ item }) => {
             onAdd={onAdd}
           />
           {itemQuantity > 0 && (
-            <CardActions>              
-              <Button component={Link} to="/cart" variant="contained" color="primary">
-                Ver a carrito
+            <CardActions>
+              <Button
+                component={Link}
+                to="/cart"
+                variant="contained"
+                color="primary"
+              >
+                Ver carrito
               </Button>
               <br />
-              <Button component={Link} to="/" variant="contained" color="primary">
+              <Button
+                component={Link}
+                to="/"
+                variant="contained"
+                color="primary"
+              >
                 Seguir comprando
               </Button>
             </CardActions>
           )}
         </Typography>
-        }
-      </Card>
+      )}
+    </Card>
   );
 };
 
