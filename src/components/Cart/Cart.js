@@ -36,6 +36,7 @@ const Cart = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [confEmail, setConfEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [buyer, setBuyer] = useState(buyerDefaultValues);
   const orderId = uuid();
@@ -110,6 +111,8 @@ const Cart = () => {
               type="email"
               defaultValue={name}
               onChange={(e) => setName(e.target.value)}
+              error={name === ""}
+              helperText={name === "" ? 'Agregar Nombre' : ' '}
             />
             <Box sx={{ p: 1 }} />
             <TextField
@@ -123,6 +126,8 @@ const Cart = () => {
                 inputMode: "numeric",
                 pattern: "[0-9]*",
               }}
+              error={phone === ""}
+              helperText={phone === "" ? 'Agregar Numero Telefonico' : ' '}
             />
             <Box sx={{ p: 1 }} />
             <TextField
@@ -131,6 +136,18 @@ const Cart = () => {
               label="Email"
               defaultValue={email}
               onChange={(e) => setEmail(e.target.value)}
+              error={email === ""}
+              helperText={email === "" ? 'Agregar email' : ' '}
+            />
+            <Box sx={{ p: 1 }} />
+            <TextField
+              required
+              id="conf-mail"
+              label="Confirmar Email"
+              defaultValue={email}
+              onChange={(e) => setConfEmail(e.target.value)}
+              error={confEmail === "" || email !== confEmail }
+              helperText={ (confEmail === "" || email !== confEmail) ? 'Confirmar email' : ' '}
             />
             <Box sx={{ p: 1 }} />
             <Button
@@ -144,7 +161,7 @@ const Cart = () => {
             </Button>
             <Box sx={{ p: 1 }} />
             <Button
-              disabled={!(name !== "" && email !== "" && phone !== "")}
+              disabled={!(name !== "" && email !== "" && phone !== "" && email === confEmail)}
               variant="contained"
               color="primary"
               onClick={() => {
