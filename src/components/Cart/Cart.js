@@ -1,9 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
@@ -40,7 +38,7 @@ const Cart = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [buyer, setBuyer] = useState(buyerDefaultValues);
-  const [orderId, setOrderId] = useState(uuid);
+  const orderId = uuid();
 
   useEffect(() => {
     setBuyer({ name: name, phone: phone, email: email });
@@ -103,7 +101,7 @@ const Cart = () => {
         <EmptyCart /> 
       )}
       {cartItems.length !== 0 ? (
-        <Paper sx={{ p: 4, px: 40, m: 5, mx: 10, flexGrow: 1 }}>
+        <Paper sx={{ p: 4, px: 40, m: 5, mr: "auto", ml: "auto", flexGrow: 1 }}>
           <Grid key="id" container spacing={1}>
             <TextField
               required

@@ -10,9 +10,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme();
 
 const CartWidget = () => {
-  console.log("temee1", theme.spacing(1))
-
-  console.log("temee2", theme.spacing(2))
 
   const { totalQuantity } = useContext(CartContext);
   const StyledBadge = withStyles((theme) => ({

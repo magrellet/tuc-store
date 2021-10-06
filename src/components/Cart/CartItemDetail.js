@@ -6,24 +6,20 @@ import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
 
-
 import { styled } from "@mui/material/styles";
 
 const Img = styled("img")({
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  });
+  margin: "auto",
+  display: "block",
+  maxWidth: "100%",
+  maxHeight: "100%",
+});
 
 const CartItemDetail = (props) => {
-    console.log(props)
- 
-    const { cartItem, i, removeItem } = props;
-
+  const { cartItem, i, removeItem } = props;
 
   return (
-    <Paper id={i} sx={{ p: 4, m: 5, mx: 70, maxWidth: 500, flexGrow: 1 }}>
+    <Paper id={i} sx={{ p: 4, m: 5, mr: "auto", ml: "auto", maxWidth: 500, flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
