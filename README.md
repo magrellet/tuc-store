@@ -1,45 +1,52 @@
-Tuc Store ecommerce - Navegación
+Tuc Book Store
 ======================================
 
 **Intro**
 --------
 Breve intro de como navegar por la pagina web.
 
+**Tecnologias**
+--------
+ - ReactJS (17.0.2)/ ecmascript 6
+ - Material UI (5.0.2)
+
+**Pre requisitos**
+--------
+ - Tener instalado node/npm
+   - https://nodejs.org/es/download/
+
 **Levantar aplicación**
 --------
 
 Al clonarse el repo, hay se debera correr:
 
- - npm install
- - npm start 
+1. Clonarse repositorio: 
+```   
+git clone git@github.com:magrellet/tuc-store.git
+```
+2. Instalar dependencias de proyecto
+```
+ npm install
+ ```
+3. Correr proyecto
+```
+ npm start
+```
+4.  En tu browser de preferencia acceder a: http://localhost:3000/
 
-**Home**
+
+**Demo**
 --------
-Para ir al home, se puede acceder mediante el nombre de la pagina web situado
-en la parte superior izquierda, o se puede acceder mediante el link de "Productos"
-en el menu de la parte superior derecha
+El siguente GIF representa, a modo demo, una navegacion rápida de la aplicación donde se observan los requisitos:
 
-![Scheme](public/home.png)
+1. Navegar entre productos y detalles
+2. Agregar a carrito producto
+3. Visualizar carrito con el listado de la orden y precio
+4. Formulario de comprador con nombre, telefono, email y confirmación de email
 
-**Categorias**
---------
-Tenemos 2 categorias por ahora:
-<br />
- - Categoria 1 destinado a marcas
-   ![Scheme](public/category-1.png)
+![image](public/demo.gif)
 
- - Categoria 2 destinada a ofertas ("Sales")
-  ![Scheme](public/category-2.png)
+5. Datos persistidos en la base de datos de firebase (Ver id en imagen)
 
-**Items - detalles**
---------
 
-Para ver los detalles de un item en particular, necesitamos clickear en la opcion
-"ver detalle"
-
-![Scheme](public/item-detail-link.png)
-
-Una vez hecho click en el detalle, podremos acceder al item, ver su precio y 
-seleccionar la cantidad de productos que necesitemos (de acuerdo al stock)
-
-![Scheme](public/item-detail.png)
+![image](public/compra.png)
