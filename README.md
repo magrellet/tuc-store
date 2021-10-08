@@ -14,6 +14,9 @@ Breve intro de como navegar por la pagina web.
 --------
  - Tener instalado node/npm
    - https://nodejs.org/es/download/
+ - Tener instalado GIT
+   - https://git-scm.com/downloads
+
 
 **Levantar aplicación**
 --------
