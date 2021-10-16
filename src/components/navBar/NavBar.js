@@ -1,9 +1,9 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 import { Link } from "react-router-dom";
 
 import CartWidget from "./CartWidget";
@@ -20,7 +20,7 @@ const NavBar = () => {
           <Typography component={Link} to="/" sx={{ p: 1 }}>
             <img src={BookImg} alt="logo" loading="lazy" />
           </Typography>
-          <Typography variant="h4"  sx={{ flexGrow: 1 }}>
+          <Typography variant="h4" sx={{ flexGrow: 1 }}>
             Tuc Book Store
           </Typography>
           <Box sx={{ flexGrow: 1 }} />

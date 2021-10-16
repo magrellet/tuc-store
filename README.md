@@ -3,14 +3,23 @@ Tuc Book Store
 
 **Intro**
 --------
-Breve intro de como navegar por la pagina web.
+Tuc Web Store es una aplicación web, con las funcionalidades básicas de un e commers con carrito de compras.
 
 **Tecnologias**
 --------
- - ReactJS (17.0.2)/ ecmascript 6
- - Material UI (5.0.2)
+ - ReactJS (17.0.2)
+ - Material UI (4.x.x)
+ - Firebase Database
+ - Firebase Hosting
 
-**Pre requisitos**
+**Acceso WEB**
+--------
+La aplicación esta deployada en Firebase hosting.
+Estos nos permitira navegar y usar la applicacion si necesidad de instalar software en la maquina local lo que conlleva a errores en librerias y versiones
+
+URL: https://tuc-store.web.app/
+
+**Pre requisitos (para uso local)**
 --------
  - Tener instalado node/npm
    - https://nodejs.org/es/download/
@@ -18,7 +27,7 @@ Breve intro de como navegar por la pagina web.
    - https://git-scm.com/downloads
 
 
-**Levantar aplicación**
+**Levantar aplicación local**
 --------
 
 Al clonarse el repo, hay se debera correr:

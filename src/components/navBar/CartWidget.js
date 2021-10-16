@@ -1,16 +1,11 @@
 import React, { useContext } from "react";
-import Badge from "@mui/material/Badge";
-import IconButton from "@mui/material/IconButton";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { withStyles } from "@material-ui/core/styles";
+import Badge from "@material-ui/core/Badge";
+import IconButton from "@material-ui/core/IconButton";
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import { CartContext } from "../../context/CartContext";
 
-import { withStyles } from "@mui/styles";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const theme = createTheme();
-
 const CartWidget = () => {
-
   const { totalQuantity } = useContext(CartContext);
   const StyledBadge = withStyles((theme) => ({
     badge: {
@@ -22,13 +17,11 @@ const CartWidget = () => {
   }))(Badge);
 
   return (
-    <ThemeProvider theme={theme}>
-      <IconButton aria-label="cart">
-        <StyledBadge badgeContent={totalQuantity} color="secondary">
-          <ShoppingCartIcon />
-        </StyledBadge>
-      </IconButton>
-    </ThemeProvider>
+    <IconButton aria-label="cart">
+      <StyledBadge badgeContent={totalQuantity} color="secondary">
+        <ShoppingCart />
+      </StyledBadge>
+    </IconButton>
   );
 };
 

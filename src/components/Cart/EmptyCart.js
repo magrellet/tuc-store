@@ -1,23 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: "4%",
+    margin: "5%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    display: "flex",
+    flexGrow: 1,
+    maxWidth: "500px",
+  },
+}));
 
 const EmptyCart = () => {
+  const classes = useStyles();
   return (
-    <Paper id="id" sx={{ p: 4, m: 5, mr: "auto", ml: "auto",  maxWidth: 500, flexGrow: 1 }}>
-      <Grid container spacing={2}></Grid>
+    <Paper id="id" className={classes.paper}>
       <Grid item>
-        <Typography variant="subtitle1">
-          El carrito esta vacio
-          <br />
-          <Button component={Link} to="/" variant="contained" color="primary">
-            Agregar items a mi carrito
-          </Button>
-        </Typography>
+        <Typography variant="body1">El carrito esta vacio</Typography>
+
+        <br />
+        <Button component={Link} to="/" variant="contained" color="primary">
+          Agregar items a mi carrito
+        </Button>
       </Grid>
     </Paper>
   );

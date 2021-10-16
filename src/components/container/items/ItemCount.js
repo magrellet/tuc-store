@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import TextField from "@material-ui/core/TextField";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    padding: "17px",
+    marginLeft: "4px",
+    marginRight: "4px",
+  },
+}));
 
 const ItemCount = (props) => {
   const { initialQuantity, maxStock, onAdd } = props;
   const [itemCount, setItemCount] = useState(initialQuantity);
   const itemStock = maxStock;
+  const classes = useStyles();
 
   const increateItems = (e) => {
     e.preventDefault();
@@ -30,6 +40,7 @@ const ItemCount = (props) => {
     <div>
       <ButtonGroup color="primary">
         <Button
+          className={classes.button}
           sx={{ p: 2, mx: 1 }}
           color="primary"
           onClick={(e) => {
@@ -55,6 +66,7 @@ const ItemCount = (props) => {
       />
       <ButtonGroup color="primary">
         <Button
+          className={classes.button}
           sx={{ p: 2, mx: 1 }}
           color="primary"
           onClick={(e) => {

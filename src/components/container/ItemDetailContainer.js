@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import ItemDetail from "./items/ItemDetail";
 
 import { db } from "../firebase";
@@ -16,13 +16,13 @@ const ItemDetailContainer = ({ match }) => {
 
       const productsList = [];
       productsSnapshot.forEach((element) => {
-        productsList.push({...element.data(), id: element.id});
+        productsList.push({ ...element.data(), id: element.id });
       });
 
-      setItem(productsList.filter((item) => item.id === itemId)[0]);      
-    }
-    getProducts(db)
-  },[itemId]);
+      setItem(productsList.filter((item) => item.id === itemId)[0]);
+    };
+    getProducts(db);
+  }, [itemId]);
 
   return (
     <div>{item !== "" ? <ItemDetail item={item} /> : <CircularProgress />}</div>

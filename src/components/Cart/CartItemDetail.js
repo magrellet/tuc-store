@@ -1,64 +1,88 @@
 import React from "react";
 
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import ButtonBase from "@mui/material/ButtonBase";
-import Button from "@mui/material/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import ButtonBase from "@material-ui/core/ButtonBase";
+import Button from "@material-ui/core/Button";
 
-import { styled } from "@mui/material/styles";
-
-const Img = styled("img")({
-  margin: "auto",
-  display: "block",
-  maxWidth: "100%",
-  maxHeight: "100%",
-});
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    padding: "10px",
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
+  },
+  paper: {
+    padding: theme.spacing(2),
+    margin: "auto",
+    maxWidth: 500,
+  },
+  image: {
+    width: 128,
+    height: 128,
+  },
+  img: {
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
+  form: {
+    padding: "4px",
+  },
+}));
 const CartItemDetail = (props) => {
   const { cartItem, i, removeItem } = props;
+  const classes = useStyles();
 
   return (
-    <Paper id={i} sx={{ p: 4, m: 5, mr: "auto", ml: "auto", maxWidth: 500, flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="complex" src={cartItem.item.img} />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                {cartItem.item.title}
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                Precio Unitario: {cartItem.item.price}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Cantidad: {cartItem.quantity}
-              </Typography>
+    <div className={classes.root}>
+      <Paper key={i} className={classes.paper}>
+        <Grid key={i} container spacing={2}>
+          <Grid item>
+            <ButtonBase className={classes.image}>
+              <img
+                className={classes.img}
+                alt="complex"
+                src={cartItem.item.img}
+              />
+            </ButtonBase>
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography gutterBottom variant="subtitle1">
+                  {cartItem.item.title}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="body2" style={{ cursor: "pointer" }}>
+                  <Button
+                    onClick={() => {
+                      removeItem(cartItem.item.id);
+                    }}
+                  >
+                    Remover
+                  </Button>
+                </Typography>
+              </Grid>
             </Grid>
             <Grid item>
-              <Typography sx={{ cursor: "pointer" }} variant="body2">
-                <Button
-                  onClick={() => {
-                    removeItem(cartItem.item.id);
-                  }}
-                >
-                  Remover
-                </Button>
+              <Typography variant="subtitle1">
+                Cantidad: {cartItem.quantity}
+              </Typography>
+              <Typography variant="subtitle1">
+                Precio total: {cartItem.item.price * cartItem.quantity}
               </Typography>
             </Grid>
           </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              Precio total: {cartItem.item.price * cartItem.quantity}
-            </Typography>
-          </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </div>
   );
 };
 

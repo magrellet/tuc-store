@@ -1,16 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import TextField from "@mui/material/TextField";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { CartContext } from "../../context/CartContext";
 
@@ -20,6 +20,31 @@ import { setDoc, doc, updateDoc, Timestamp } from "firebase/firestore/lite";
 import { v4 as uuid } from "uuid";
 import CartItemDetail from "./CartItemDetail";
 import EmptyCart from "./EmptyCart";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: "4%",
+    margin: "5%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    display: "flex",
+    flexGrow: 1,
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
+  textField: {
+    padding: "5px",
+    margin: "5px",
+  },
+  button: {
+    padding: "20px",
+    marginLeft: "5px",
+    marginRight: "5px",
+  },
+  grid: {
+    margin: "10px",
+  },
+}));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -40,6 +65,7 @@ const Cart = () => {
   const [phone, setPhone] = useState("");
   const [buyer, setBuyer] = useState(buyerDefaultValues);
   const orderId = uuid();
+  const classes = useStyles();
 
   useEffect(() => {
     setBuyer({ name: name, phone: phone, email: email });
@@ -99,12 +125,14 @@ const Cart = () => {
           );
         })
       ) : (
-        <EmptyCart /> 
+        <EmptyCart />
       )}
       {cartItems.length !== 0 ? (
-        <Paper sx={{ p: 4, px: 40, m: 5, mr: "auto", ml: "auto", flexGrow: 1 }}>
-          <Grid key="id" container spacing={1}>
+        <Paper container className={classes.paper}>
+          <br />
+          <Grid key="id" container>
             <TextField
+              className={classes.textField}
               required
               id="name"
               label="Nombre"
@@ -112,10 +140,10 @@ const Cart = () => {
               defaultValue={name}
               onChange={(e) => setName(e.target.value)}
               error={name === ""}
-              helperText={name === "" ? 'Agregar Nombre' : ' '}
+              helperText={name === "" ? "Agregar Nombre" : " "}
             />
-            <Box sx={{ p: 1 }} />
             <TextField
+              className={classes.textField}
               required
               id="phone"
               label="Telefono"
@@ -127,30 +155,36 @@ const Cart = () => {
                 pattern: "[0-9]*",
               }}
               error={phone === ""}
-              helperText={phone === "" ? 'Agregar Numero Telefonico' : ' '}
+              helperText={phone === "" ? "Agregar Numero Telefonico" : " "}
             />
-            <Box sx={{ p: 1 }} />
             <TextField
+              className={classes.textField}
               required
               id="email"
               label="Email"
               defaultValue={email}
               onChange={(e) => setEmail(e.target.value)}
               error={email === ""}
-              helperText={email === "" ? 'Agregar email' : ' '}
+              helperText={email === "" ? "Agregar email" : " "}
             />
-            <Box sx={{ p: 1 }} />
             <TextField
+              className={classes.textField}
               required
               id="conf-mail"
               label="Confirmar Email"
               defaultValue={email}
               onChange={(e) => setConfEmail(e.target.value)}
-              error={confEmail === "" || email !== confEmail }
-              helperText={ (confEmail === "" || email !== confEmail) ? 'Confirmar email' : ' '}
+              error={confEmail === "" || email !== confEmail}
+              helperText={
+                confEmail === "" || email !== confEmail
+                  ? "Confirmar email"
+                  : " "
+              }
             />
-            <Box sx={{ p: 1 }} />
+            <br />
+            <br />
             <Button
+              className={classes.button}
               variant="contained"
               color="primary"
               onClick={() => {
@@ -159,9 +193,16 @@ const Cart = () => {
             >
               Limpiar carrito
             </Button>
-            <Box sx={{ p: 1 }} />
             <Button
-              disabled={!(name !== "" && email !== "" && phone !== "" && email === confEmail)}
+              className={classes.button}
+              disabled={
+                !(
+                  name !== "" &&
+                  email !== "" &&
+                  phone !== "" &&
+                  email === confEmail
+                )
+              }
               variant="contained"
               color="primary"
               onClick={() => {
@@ -170,6 +211,7 @@ const Cart = () => {
             >
               Comprar
             </Button>
+            <br />
             <Dialog
               open={open}
               TransitionComponent={Transition}

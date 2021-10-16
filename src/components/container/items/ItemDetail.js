@@ -1,26 +1,42 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardActions from "@mui/material/CardActions";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 
 import ItemCount from "./ItemCount";
 import { CartContext } from "../../../context/CartContext";
+
+const useStyles = makeStyles((theme) => ({
+  card: {
+    padding: "4%",
+    margin: "1%",
+    marginLeft: "30%",
+    marginRight: "30%",
+    display: "flex",
+    paddingRight: "70px",
+    paddingLeft: "70px",
+    maxWidth: "400px",
+    flexGrow: 1,
+  },
+}));
 
 const ItemDetail = ({ item }) => {
   const initialQuantity = 0;
   const [itemQuantity, setItemQuantity] = useState(initialQuantity);
   const { addItem } = useContext(CartContext);
+  const classes = useStyles();
 
   const onAdd = (quantityToAdd) => {
     setItemQuantity(quantityToAdd);
     addItem(item, quantityToAdd);
-  }; 
+  };
 
   return (
-    <Card sx={{ p: 4, m: 5, mr: "auto", ml: "auto", maxWidth: 400 }}>
+    <Card className={classes.card}>
       {item && (
         <Typography component="div">
           <CardMedia
@@ -30,15 +46,18 @@ const ItemDetail = ({ item }) => {
             src={item.img}
             title="img"
           />
-          <Typography className="Typography" variant="h4" color="textPrimary">
+          <Typography variant="h4" color="textPrimary">
             {item.title}
           </Typography>
-          <Typography className="Typography" variant="h5" color="textSecondary">
+          <br />
+          <Typography variant="h5" color="textSecondary">
             {item.body}
           </Typography>
-          <Typography className="Typography" variant="h6" color="textSecondary">
+          <br />
+          <Typography variant="subtitle1" color="textSecondary">
             Precio: {item.price}
           </Typography>
+          <br />
           <ItemCount
             initialQuantity={initialQuantity}
             maxStock={item.stock}
